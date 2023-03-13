@@ -1,4 +1,4 @@
-package com.jjchat;
+package com.chatting.client;
 
 class JjchatApplicationTests {
 
