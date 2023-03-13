@@ -1,6 +1,8 @@
 package com.chatting.client.view;
 
 
+import com.chatting.client.model.Protocol;
+
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -15,7 +17,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import com.common.Protocol;
 
 public class MainView extends JFrame {
 
