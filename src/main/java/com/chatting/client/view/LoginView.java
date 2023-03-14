@@ -1,5 +1,6 @@
 package com.chatting.client.view;
 
+import com.chatting.client.ChattingClientLauncher;
 import com.chatting.client.handler.LoginHandler;
 import com.chatting.client.model.Client;
 import com.chatting.client.model.ClientMessageListener;
@@ -62,7 +63,7 @@ public class LoginView extends JFrame {
 
                 } else if (e.getActionCommand().equals("회원가입")) {
                     if (client == null) {
-                        client = new Client("100.100.100.56", 9100);
+                        client = new Client(ChattingClientLauncher.ip, 9100);
                         ClientMessageListener listener = new ClientMessageListener(client);
                         listener.start();
 

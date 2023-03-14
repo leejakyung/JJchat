@@ -6,8 +6,11 @@ import com.chatting.client.model.ClientMessageListener;
 import java.io.IOException;
 
 public class ChattingClientLauncher {
+	
+	public static final String ip = "192.168.0.5";
+	
     public static void main(String[] args) {
-        Client client = new Client("100.100.100.56", 9100);
+        Client client = new Client(ip, 9100);
         ClientMessageListener listener = new ClientMessageListener(client);
         listener.start();
 
