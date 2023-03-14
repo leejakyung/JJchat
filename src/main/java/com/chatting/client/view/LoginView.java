@@ -1,13 +1,19 @@
 package com.chatting.client.view;
 
 import com.chatting.client.handler.LoginHandler;
+import com.chatting.client.model.Client;
+import com.chatting.client.model.ClientMessageListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
 
 public class LoginView extends JFrame {
+
+    private Client client;
 
     private LoginHandler loginHandler;
     private JLabel label_id = new JLabel("ID");
@@ -21,6 +27,12 @@ public class LoginView extends JFrame {
     protected LoginView() {
         loginHandler = new LoginHandler(this);
         initializeDisplay();
+        initialize();
+    }
+
+    private void initialize() {
+
+
     }
 
     private void initializeDisplay() {
@@ -34,7 +46,7 @@ public class LoginView extends JFrame {
         label_pw.setBounds(55, 250, 80, 40);
 
         this.add(field_id);
-		field_pw.addActionListener(loginHandler);
+        field_pw.addActionListener(loginHandler);
         this.add(field_pw);
         field_id.setBounds(120, 200, 185, 40);
         field_pw.setBounds(120, 250, 185, 40);
@@ -45,13 +57,22 @@ public class LoginView extends JFrame {
         button_join.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Object o = e;
-                if (o == button_login || o == field_id) {
+                if (e.getActionCommand().equals("로그인")) {
 
 
+                } else if (e.getActionCommand().equals("회원가입")) {
+                    if (client == null) {
+                        client = new Client("100.100.100.56", 9100);
+                        ClientMessageListener listener = new ClientMessageListener(client);
+                        listener.start();
 
-                } else if (o == button_join) {
-
+                    }
+                    String s = "회원가입 버튼 클릭";
+                    try {
+                        client.getOos().writeObject(s);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
 
                 }
             }

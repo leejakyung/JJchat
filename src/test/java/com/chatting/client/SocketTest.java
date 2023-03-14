@@ -1,9 +1,6 @@
 package com.chatting.client;
 
-import com.chatting.client.model.Client1;
 import org.junit.Test;
-
-import java.net.Socket;
 
 public class SocketTest {
 
