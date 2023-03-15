@@ -15,10 +15,11 @@ import com.chatting.client.model.Protocol;
 import com.chatting.client.view.LoginView;
 
 public class LoginHandler implements ActionListener{
+
+	private static final Logger logger = LogManager.getLogger(LoginView.class);
+
 	private LoginView logView = null;
 	private Client client;
-	
-	static final Logger log = LogManager.getLogger(LoginHandler.class.getName());
 
 	public LoginHandler(LoginView logView, Client client){
 		this.logView = logView;
@@ -29,7 +30,7 @@ public class LoginHandler implements ActionListener{
 	public void actionPerformed(ActionEvent ae) {
 		Object obj = ae.getSource();
 		try {
-			log.info("log4j 테스트!!!");
+			logger.info("log4j 테스트!!!");
 			if (obj == logView.getButton_login() || obj == logView.getField_pw()) {
 				if (ae.getActionCommand().equals("로그인")) {
 					if (client == null) {

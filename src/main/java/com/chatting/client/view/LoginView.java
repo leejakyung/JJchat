@@ -1,19 +1,16 @@
 package com.chatting.client.view;
 
-import com.chatting.client.ChattingClientLauncher;
 import com.chatting.client.handler.LoginHandler;
 import com.chatting.client.model.Client;
-import com.chatting.client.model.ClientMessageListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.Socket;
 
 public class LoginView extends JFrame {
 
+    private static final Logger logger = LogManager.getLogger(LoginView.class);
     private Client client;
 
     private LoginHandler loginHandler;
@@ -32,8 +29,9 @@ public class LoginView extends JFrame {
     }
 
     private void initialize() {
-
-
+        logger.info("로그인 뷰 생성 성공");
+        logger.warn("로그인 뷰 생성 성공");
+        logger.error("로그인 뷰 생성 성공");
     }
 
     private void initializeDisplay() {
@@ -52,36 +50,11 @@ public class LoginView extends JFrame {
         field_id.setBounds(120, 200, 185, 40);
         field_pw.setBounds(120, 250, 185, 40);
 
-//        button_login.addActionListener(new LoginHandler(this));
-        
         button_login.addActionListener(loginHandler);
         
         this.add(button_login);
         button_login.setBounds(160, 300, 100, 40);
         button_join.addActionListener(loginHandler);
-//        button_join.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if (e.getActionCommand().equals("로그인")) {
-//                	
-//
-//                } else if (e.getActionCommand().equals("회원가입")) {
-//                    if (client == null) {
-//                        client = new Client(ChattingClientLauncher.ip, 9100);
-//                        ClientMessageListener listener = new ClientMessageListener(client);
-//                        listener.start();
-//
-//                    }
-//                    String s = "회원가입 버튼 클릭";
-//                    try {
-//                        client.getOos().writeObject(s);
-//                    } catch (IOException ex) {
-//                        throw new RuntimeException(ex);
-//                    }
-//
-//                }
-//            }
-//        });
         this.add(button_join);
         button_join.setBounds(160, 350, 100, 40);
 
