@@ -3,7 +3,13 @@ package com.chatting.client.view;
 
 import javax.swing.*;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 public class JoinView extends JDialog {
+	
+	private static final Logger logger = LogManager.getLogger(JoinView.class);
 
     private JLabel jlb_id = new JLabel("아이디");
     private JLabel jlb_pw = new JLabel("비밀번호");
@@ -45,7 +51,7 @@ public class JoinView extends JDialog {
         //버튼추가.
         this.add(jbtn_join);
 //		jbtn_join.addActionListener(addHandler);
-        System.out.println("실행됨");
+        logger.info("실행됨");
 
         //버튼 위치 세팅.
         jbtn_join.setBounds(160, 270, 100, 40);

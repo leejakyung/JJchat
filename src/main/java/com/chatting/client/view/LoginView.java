@@ -16,8 +16,8 @@ public class LoginView extends JFrame {
     private LoginHandler loginHandler;
     private JLabel label_id = new JLabel("ID");
     private JLabel label_pw = new JLabel("PW");
-    private JTextField field_id = new JTextField();
-    private JPasswordField field_pw = new JPasswordField();
+    public JTextField field_id = new JTextField();
+    public JPasswordField field_pw = new JPasswordField();
     private JButton button_login = new JButton("로그인");
     private JButton button_join = new JButton("회원가입");
     Font font = new Font("고딕체", Font.BOLD, 17);
@@ -48,7 +48,9 @@ public class LoginView extends JFrame {
         field_pw.addActionListener(loginHandler);
         this.add(field_pw);
         field_id.setBounds(120, 200, 185, 40);
+        field_id.getText();
         field_pw.setBounds(120, 250, 185, 40);
+        field_pw.getText();
 
         button_login.addActionListener(loginHandler);
         
