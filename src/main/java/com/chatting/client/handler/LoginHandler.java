@@ -17,6 +17,7 @@ import com.chatting.client.model.Client;
 import com.chatting.client.model.ClientMessageListener;
 import com.chatting.client.model.Protocol;
 import com.chatting.client.view.LoginView;
+import com.chatting.client.view.MainView;
 
 public class LoginHandler implements ActionListener{
 
@@ -37,7 +38,7 @@ public class LoginHandler implements ActionListener{
 	public void actionPerformed(ActionEvent ae) {
 		Object obj = ae.getSource();
 		try {
-			logger.info("log4j 테스트!!!");
+//			logger.info("log4j 테스트!!!");
 			if (obj == logView.getButton_login() || obj == logView.getField_pw()) {
 				if (ae.getActionCommand().equals("로그인")) {
 					if (client == null) {
@@ -54,6 +55,8 @@ public class LoginHandler implements ActionListener{
 						client.getOos().writeObject(s);
 						client.getOos().writeObject(Protocol.checkLogin+" "+logView.field_id.getText()+" "+logView.field_pw.getText());
 						logger.info("100"+" "+logView.field_id.getText()+" "+logView.field_pw.getText());
+						
+						
 
 					} catch (IOException ex) {
 						throw new RuntimeException(ex);
@@ -71,7 +74,7 @@ public class LoginHandler implements ActionListener{
 						ClientMessageListener listener = new ClientMessageListener(client);
 						listener.start();
 
-					}
+					} 
 
 					String s = "회원가입 버튼 클릭";
 					try {
