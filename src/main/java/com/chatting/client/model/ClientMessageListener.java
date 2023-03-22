@@ -14,15 +14,15 @@ public class ClientMessageListener extends Thread {
 	private static final Logger logger = LogManager.getLogger(ClientMessageListener.class);
 
     private Client client;
-    private LoginView logView = null;
+    private LoginView loginView = null;
     
     public ClientMessageListener(Client client){
         this.client = client;
      }
 
-    public ClientMessageListener(Client client, LoginView logView){
+    public ClientMessageListener(Client client, LoginView loginView){
       this.client = client;
-      this.logView = logView;
+      this.loginView = loginView;
     }
 
     @Override
@@ -34,14 +34,14 @@ public class ClientMessageListener extends Thread {
                 String msg = client.getOis().readObject().toString();
                 logger.info(msg);
                 logger.info(client);
-                logger.info(logView);
+                logger.info(loginView);
                 if("로그인 성공".equals(msg)){
 					MainView mainView = new MainView();
-					if(logView != null) {
-						logView.dispose();
+					if(loginView != null) {
+                        loginView.dispose();
 					}
 				} else if("로그인 실패".equals(msg)) {
-					JOptionPane.showMessageDialog(logView, "로그인에 실패했습니다.");
+					JOptionPane.showMessageDialog(loginView, "로그인에 실패했습니다.");
 				}
 
             } catch (Exception e) {

@@ -22,7 +22,7 @@ public class LoginView extends JFrame {
     private JButton button_join = new JButton("회원가입");
     Font font = new Font("고딕체", Font.BOLD, 17);
 
-    protected LoginView() {
+    public LoginView() {
         loginHandler = new LoginHandler(this, client);
         initializeDisplay();
         initialize();

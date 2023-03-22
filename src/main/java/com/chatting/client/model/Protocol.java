@@ -7,6 +7,8 @@ import java.util.Vector;
 
 
 public class Protocol implements Serializable{
+
+	public final static String ip = "100.100.100.56";
 	//유저 아이디 저장 할 필요가 있을까? 
 	public static String myID = "";
 	//온라인 유저 리스트

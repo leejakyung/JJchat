@@ -23,14 +23,14 @@ public class LoginHandler implements ActionListener{
 
 	private static final Logger logger = LogManager.getLogger(LoginHandler.class);
 
-	private LoginView logView = null;
+	private LoginView loginView = null;
 	private Client client;
 
 //    private JTextField field_id = new JTextField();
 //    private JPasswordField field_pw = new JPasswordField();
 	
-	public LoginHandler(LoginView logView, Client client){
-		this.logView = logView;
+	public LoginHandler(LoginView loginView, Client client){
+		this.loginView = loginView;
 		this.client = client;
 	}
 
@@ -39,11 +39,11 @@ public class LoginHandler implements ActionListener{
 		Object obj = ae.getSource();
 		try {
 //			logger.info("log4j 테스트!!!");
-			if (obj == logView.getButton_login() || obj == logView.getField_pw()) {
+			if (obj == loginView.getButton_login() || obj == loginView.getField_pw()) {
 				if (ae.getActionCommand().equals("로그인")) {
 					if (client == null) {
-						client = new Client(ChattingClientLauncher.ip, 9100);
-						ClientMessageListener listener = new ClientMessageListener(client);
+						client = new Client(Protocol.ip, 9100);
+						ClientMessageListener listener = new ClientMessageListener(client, loginView);
 						listener.start();
 
 					}
@@ -53,8 +53,8 @@ public class LoginHandler implements ActionListener{
 					String s = "로그인 버튼 클릭";
 					try {
 						client.getOos().writeObject(s);
-						client.getOos().writeObject(Protocol.checkLogin+" "+logView.field_id.getText()+" "+logView.field_pw.getText());
-						logger.info("100"+" "+logView.field_id.getText()+" "+logView.field_pw.getText());
+						client.getOos().writeObject(Protocol.checkLogin+" "+loginView.field_id.getText()+" "+loginView.field_pw.getText());
+						logger.info("100"+" "+loginView.field_id.getText()+" "+loginView.field_pw.getText());
 						
 						
 
@@ -66,12 +66,12 @@ public class LoginHandler implements ActionListener{
 				} 
 
 
-			} else if (obj == logView.getButton_join()) {
+			} else if (obj == loginView.getButton_join()) {
 				
 				if (ae.getActionCommand().equals("회원가입")) {
 					if (client == null) {
-						client = new Client(ChattingClientLauncher.ip, 9100);
-						ClientMessageListener listener = new ClientMessageListener(client);
+						client = new Client(Protocol.ip, 9100);
+						ClientMessageListener listener = new ClientMessageListener(client, loginView);
 						listener.start();
 
 					} 
