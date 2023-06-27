@@ -37,13 +37,14 @@ public class ClientReceiver extends Thread {
                 switch (arr[0]) {
                     case "100":
                         logger.info("로그인 프로토콜");
-
-                        if("로그인 성공".equals(msg)){
+                        
+                        msg = arr[1];
+                        if("Y".equals(msg)){
                             createMainView(client);
                             if(loginView != null) {
                                 loginView.dispose();
                             }
-                        } else if("로그인 실패".equals(msg)) {
+                        } else if("N".equals(msg)) {
                             JOptionPane.showMessageDialog(loginView, "로그인에 실패했습니다.");
                         }
 
