@@ -1,4 +1,5 @@
-package com.chatting.client.model;
+package com.chatting.client.core;
+
 
 
 import java.io.IOException;
@@ -11,12 +12,15 @@ public class Client{
     private Socket socket;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
+    private ClientReceiver receiver;
 
     public Client(String ip, int port) {
         try{
             this.socket = new Socket(ip, port);
             this.oos = new ObjectOutputStream(socket.getOutputStream());
             this.ois = new ObjectInputStream(socket.getInputStream());
+            receiver = new ClientReceiver(this);
+            receiver.start();
 
         }catch (IOException e){
             e.printStackTrace();

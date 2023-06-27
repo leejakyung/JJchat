@@ -14,10 +14,12 @@ public class UserListPanel extends JPanel {
     private DefaultTableModel dtm_online;
     private DefaultTableModel dtm_offline;
 
+    private String userName;
 
-    public UserListPanel() {
+    public UserListPanel(String userName) {
+        this.userName = userName;
         initializeDisplay();
-
+        initialize();
     }
 
     public void initialize(){
@@ -26,7 +28,7 @@ public class UserListPanel extends JPanel {
 
     public void initializeDisplay() {
 
-        label_userName.setText(Protocol.myID + "님 환영합니다.");
+        label_userName.setText(userName + "님 환영합니다.");
         label_userName.setFont(new Font("맑은고딕", Font.BOLD, 15));
 
         JPanel panel_north = new JPanel();
@@ -91,10 +93,6 @@ public class UserListPanel extends JPanel {
         add(panel_offline); // 오프라인 테이블 적용
         add(panel_south);
 
-    }
-
-    public JLabel getLabel_userName() {
-        return label_userName;
     }
 
     public DefaultTableModel getDtm_online() {

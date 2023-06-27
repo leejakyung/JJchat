@@ -1,29 +1,25 @@
 package com.chatting.client.view;
 
-import com.chatting.client.handler.LoginHandler;
-import com.chatting.client.model.Client;
+import com.chatting.client.core.Client;
+import com.chatting.client.model.Protocol;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class LoginView extends JFrame {
 
     private static final Logger logger = LogManager.getLogger(LoginView.class);
-    private Client client;
+    private final Client client;
 
-    private LoginHandler loginHandler;
-    private JLabel label_id = new JLabel("ID");
-    private JLabel label_pw = new JLabel("PW");
-    public JTextField field_id = new JTextField();
-    public JPasswordField field_pw = new JPasswordField();
-    private JButton button_login = new JButton("로그인");
-    private JButton button_join = new JButton("회원가입");
-    Font font = new Font("고딕체", Font.BOLD, 17);
+    public JTextField field_id;
+    public JPasswordField field_pw;
 
-    public LoginView() {
-        loginHandler = new LoginHandler(this, client);
+
+    public LoginView(Client client) {
+        this.client = client;
         initializeDisplay();
         initialize();
     }
@@ -36,6 +32,13 @@ public class LoginView extends JFrame {
 
     private void initializeDisplay() {
 
+        Font font = new Font("고딕체", Font.BOLD, 17);
+        JLabel label_id = new JLabel("ID");
+        JLabel label_pw = new JLabel("PW");
+
+        field_id = new JTextField();
+        field_pw = new JPasswordField();
+
         this.setLayout(null);
         this.add(label_id);
         this.add(label_pw);
@@ -45,18 +48,40 @@ public class LoginView extends JFrame {
         label_pw.setBounds(55, 250, 80, 40);
 
         this.add(field_id);
-        field_pw.addActionListener(loginHandler);
+        field_pw.addActionListener(e -> {
+            try {
+                String msg = Protocol.checkLogin+" "+field_id.getText()+" "+field_pw.getText();
+                logger.info("서버로 메세지 전송 : {}", msg);
+                client.getOos().writeObject(msg);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         this.add(field_pw);
         field_id.setBounds(120, 200, 185, 40);
         field_id.getText();
         field_pw.setBounds(120, 250, 185, 40);
         field_pw.getText();
 
-        button_login.addActionListener(loginHandler);
+        JButton button_login = new JButton("로그인");
+        button_login.addActionListener(e -> {
+            try {
+
+                String msg = Protocol.checkLogin+" "+field_id.getText()+" "+field_pw.getText();
+                logger.info("서버로 메세지 전송 : {}", msg);
+                client.getOos().writeObject(msg);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         
         this.add(button_login);
         button_login.setBounds(160, 300, 100, 40);
-        button_join.addActionListener(loginHandler);
+
+        JButton button_join = new JButton("회원가입");
+        button_join.addActionListener(e -> {
+
+        });
         this.add(button_join);
         button_join.setBounds(160, 350, 100, 40);
 
@@ -64,29 +89,5 @@ public class LoginView extends JFrame {
         this.setBounds(700, 200, 400, 600);
         this.setTitle("Login");
         this.setVisible(true);
-    }
-
-    public JLabel getLabel_id() {
-        return label_id;
-    }
-
-    public JLabel getLabel_pw() {
-        return label_pw;
-    }
-
-    public JTextField getField_id() {
-        return field_id;
-    }
-
-    public JPasswordField getField_pw() {
-        return field_pw;
-    }
-
-    public JButton getButton_login() {
-        return button_login;
-    }
-
-    public JButton getButton_join() {
-        return button_join;
     }
 }

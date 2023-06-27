@@ -8,10 +8,12 @@ import javax.swing.table.TableColumnModel;
 public class ChatListPanel extends JPanel {
 
     private DefaultTableModel dtm_room;
+    private String userName;
 
-    public ChatListPanel() {
+    public ChatListPanel(String userName) {
+        this.userName = userName;
         initializeDisplay();
-
+        initialize();
     }
 
 
