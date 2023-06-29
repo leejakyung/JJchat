@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 
 public class LoginView extends JFrame {
@@ -48,15 +50,33 @@ public class LoginView extends JFrame {
         label_pw.setBounds(55, 250, 80, 40);
 
         this.add(field_id);
-        field_pw.addActionListener(e -> {
-            try {
-                String msg = Protocol.checkLogin+" "+field_id.getText()+" "+field_pw.getText();
-                logger.info("서버로 메세지 전송 : {}", msg);
-                client.getOos().writeObject(msg);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+
+        field_pw.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    String msg = Protocol.checkLogin+Protocol.seperator+field_id.getText()+Protocol.seperator+field_pw.getText();
+                    logger.info("서버로 메세지 전송 : {}", msg);
+                    try {
+                        client.getOos().writeObject(msg);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
             }
         });
+
         this.add(field_pw);
         field_id.setBounds(120, 200, 185, 40);
         field_id.getText();
@@ -65,14 +85,7 @@ public class LoginView extends JFrame {
 
         JButton button_login = new JButton("로그인");
         button_login.addActionListener(e -> {
-            try {
-
-                String msg = Protocol.checkLogin+" "+field_id.getText()+" "+field_pw.getText();
-                logger.info("서버로 메세지 전송 : {}", msg);
-                client.getOos().writeObject(msg);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            client.sendMessage(Protocol.checkLogin, field_id.getText(), field_pw.getText());
         });
         
         this.add(button_login);

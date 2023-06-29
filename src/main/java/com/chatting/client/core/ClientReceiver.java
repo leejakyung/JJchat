@@ -3,12 +3,8 @@ package com.chatting.client.core;
 import com.chatting.client.model.Protocol;
 import com.chatting.client.view.LoginView;
 import com.chatting.client.view.MainView;
-import com.chatting.client.view.UserListPanel;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.List;
 
 import javax.swing.*;
 
@@ -41,31 +37,22 @@ public class ClientReceiver extends Thread {
                 switch (arr[0]) {
                     case "100":
                         logger.info("로그인 프로토콜");
-                        
-                        msg = arr[1];
-                        String id =  arr[2];
-                        if("Y".equals(msg)){
-                            createMainView(client, id);
+
+                        if("Y".equals(arr[2])){
+                            createMainView(client);
                             if(loginView != null) {
                                 loginView.dispose();
                             }
-                        } else if("N".equals(msg)) {
+                        } else if(!"Y".equals(msg)) {
                             JOptionPane.showMessageDialog(loginView, "로그인에 실패했습니다.");
                         }
 
 
                         break;
                     case "120":
+                        logger.info(arr[2]);
+
                         logger.info("유저리스트 프로토콜");
-                        
-                        msg = arr[1];
-                        
-                        if("in".equals(msg)) {
-//                        	List<String> loginUserList = 
-                        } else if ("out".equals(msg)) {
-                        	
-                        }
-                        
                         break;
 
                     default:
@@ -80,18 +67,24 @@ public class ClientReceiver extends Thread {
         }
     }
 
-
-	private synchronized void createLoginView(Client client){
+    private synchronized void createLoginView(Client client){
         if(loginView == null){
             loginView = new LoginView(client);
         }
     }
 
-    private synchronized void createMainView(Client client, String id){
+    private synchronized void createMainView(Client client){
         if(mainView == null){
-            mainView = new MainView(client, id);
+            mainView = new MainView(client);
         }else{
             // 화면 내렸을때 다시 보여주는기능 찾아서 넣어도 됨
         }
     }
+
+    private synchronized void shutdown(){
+        loginView = null;
+        mainView = null;
+        client.shutdown();
+    }
+
 }

@@ -3,6 +3,9 @@ package com.chatting.client;
 import com.chatting.client.core.Client;
 import com.chatting.client.view.MainView;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 /**
  * 개별 뷰 테스트할때만 사용하도록
@@ -10,13 +13,10 @@ import com.chatting.client.view.MainView;
 public class ViewTestClass {
 
     public static void main(String[] args) {
+        MainView mainView = new MainView(null);
+        List<String> online = Arrays.asList("A", "B", "C");
+        List<String> offline = Arrays.asList("D", "E", "F");
+        mainView.changeUserList(online, offline);
 
-        Client client = new Client("127.0.0.1", 9100);
-
-//        LoginView loginView = new LoginView(client);
-//        JoinView joinView = new JoinView();
-        MainView mainView = new MainView(client);
-//        CreateChattingView createChattingView = new CreateChattingView();
-//        ChatRoomView chatRoomView = new ChatRoomView();
     }
 }

@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import java.util.Vector;
 
 
 public class MainView extends JFrame {
@@ -58,28 +59,24 @@ public class MainView extends JFrame {
     }
 
 
-    public void changeUserList(List<String> online, List<String> offline) {
-
-           /*
-          dtm_online.removeRow() 행 삭제
-          dtm_online.addRow() 행 추가
-	        for(Object obj:offlineUser) {
-						Vector<Object> oneRow = new Vector<Object>();
-						oneRow.add(obj);
-						defView.dtm_offline.addRow(oneRow);
-					}
-           */
-
+    public void changeUserList(List<String> onlineUserNameList, List<String> offlineUserNameList) {
         DefaultTableModel dtm_online = panel_userList.getDtm_online();
-        int onlineRowCount = dtm_online.getRowCount();
-        logger.info("online user count : {}", onlineRowCount);
+        Vector onlineData = dtm_online.getDataVector();
+        onlineData.clear(); //테이블 온라인 유저 데이터 초기화
+
+        for(String s : onlineUserNameList){ //테이블에 온라인 유저 데이터 입력
+            Object[] data = {s};
+            dtm_online.addRow(data);
+        }
 
         DefaultTableModel dtm_offline = panel_userList.getDtm_offline();
-        int offlineRowCount = dtm_offline.getRowCount();
-        logger.info("offline user count : {}", offlineRowCount);
+        Vector offlineData = dtm_offline.getDataVector();
+        offlineData.clear();//테이블 오프라인 유저 데이터 초기화
 
-        panel_userList.repaint();
-
+        for(String s : offlineUserNameList){//테이블에 오프라인 유저 데이터 입력
+            Object[] data = {s};
+            dtm_offline.addRow(data);
+        }
     }
 
     public void changeChatRoomList() {
