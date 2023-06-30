@@ -1,6 +1,7 @@
 package com.chatting.client.view;
 
-import com.chatting.client.model.Protocol;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -9,7 +10,10 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 
 public class UserListPanel extends JPanel {
-    private final JLabel label_userName = new JLabel(); // 사용자이름
+
+    private static final Logger logger = LogManager.getLogger(UserListPanel.class);
+
+     // 사용자이름
 
     private DefaultTableModel dtm_online;
     private DefaultTableModel dtm_offline;
@@ -27,7 +31,7 @@ public class UserListPanel extends JPanel {
     }
 
     public void initializeDisplay() {
-
+        JLabel label_userName = new JLabel();
         label_userName.setText(userName + "님 환영합니다.");
         label_userName.setFont(new Font("맑은고딕", Font.BOLD, 15));
 
@@ -44,7 +48,8 @@ public class UserListPanel extends JPanel {
             }
         };
         JTable jtb_online = new JTable(dtm_online);
-        //jtb_online.addMouseListener(null);
+        jtb_online.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         panel_online.setBounds(0, 60, 500, 200);
         panel_online.add(new JLabel("온라인"));
         panel_online.add(new JScrollPane(jtb_online));
@@ -58,7 +63,7 @@ public class UserListPanel extends JPanel {
             }
         };
         JTable jtb_offline = new JTable(dtm_offline);
-        //jtb_offline.addMouseListener(null);
+        jtb_offline.setCellSelectionEnabled(false);
         panel_offline.setBounds(0, 280, 500, 200);
         panel_offline.add(new JLabel("오프라인"));
         panel_offline.add(new JScrollPane(jtb_offline));
@@ -78,7 +83,15 @@ public class UserListPanel extends JPanel {
         JPanel panel_south = new JPanel();
         JButton button_chat = new JButton("방 만들기");
         // 하단
-//            button_chat.addActionListener(defHandler);
+        button_chat.addActionListener(e -> {
+            int row = jtb_online.getSelectedRow();
+            int col = jtb_online.getSelectedColumn();
+            String cellData = getCellData(row, col);
+            logger.info("선택된 온라인 유저 셀 : {}", cellData);
+
+            CreateChattingView view = new CreateChattingView();
+
+        });
         panel_south.add(button_chat);
 
         JButton button_logout = new JButton("로그아웃");
@@ -101,5 +114,9 @@ public class UserListPanel extends JPanel {
 
     public DefaultTableModel getDtm_offline() {
         return dtm_offline;
+    }
+
+    private String getCellData(int row, int col){
+        return (String) dtm_online.getValueAt(row, col);
     }
 }

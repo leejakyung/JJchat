@@ -79,9 +79,7 @@ public class LoginView extends JFrame {
 
         this.add(field_pw);
         field_id.setBounds(120, 200, 185, 40);
-        field_id.getText();
         field_pw.setBounds(120, 250, 185, 40);
-        field_pw.getText();
 
         JButton button_login = new JButton("로그인");
         button_login.addActionListener(e -> {

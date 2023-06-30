@@ -79,10 +79,15 @@ public class MainView extends JFrame {
         }
     }
 
-    public void changeChatRoomList() {
+    public void changeChatRoomList(List<String> chattingRoomList) {
         DefaultTableModel dtm_room = panel_chatList.getDtm_room();
-        int rowCount = dtm_room.getRowCount();
-        logger.info("chatList count : {}", rowCount);
+        Vector roomData = dtm_room.getDataVector();
+        roomData.clear();//테이블 오프라인 유저 데이터 초기화
+
+        for(String s : chattingRoomList){//테이블에 오프라인 유저 데이터 입력
+            Object[] data = {s};
+            dtm_room.addRow(data);
+        }
     }
 
 }

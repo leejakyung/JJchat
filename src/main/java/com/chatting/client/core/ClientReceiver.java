@@ -1,20 +1,25 @@
 package com.chatting.client.core;
 
 import com.chatting.client.model.Protocol;
+import com.chatting.client.view.ChatRoomView;
 import com.chatting.client.view.LoginView;
 import com.chatting.client.view.MainView;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientReceiver extends Thread {
-	
+
 	private static final Logger logger = LogManager.getLogger(ClientReceiver.class);
 
     private final Client client;
     private LoginView loginView;
     private MainView mainView;
+
+    private final List<ChatRoomView> chatRoomViewList = new ArrayList<>();
 
     public ClientReceiver(Client client){
         this.client = client;
@@ -37,7 +42,7 @@ public class ClientReceiver extends Thread {
                 switch (arr[0]) {
                     case "100":
                         logger.info("로그인 프로토콜");
-                        
+
                         String id =  arr[1];
                         if("Y".equals(arr[2])){
                             createMainView(client, id);
