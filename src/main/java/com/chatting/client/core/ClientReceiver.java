@@ -37,13 +37,14 @@ public class ClientReceiver extends Thread {
                 switch (arr[0]) {
                     case "100":
                         logger.info("로그인 프로토콜");
-
+                        
+                        String id =  arr[1];
                         if("Y".equals(arr[2])){
-                            createMainView(client);
+                            createMainView(client, id);
                             if(loginView != null) {
                                 loginView.dispose();
                             }
-                        } else if(!"Y".equals(msg)) {
+                        } else if(!"Y".equals(arr[2])) {
                             JOptionPane.showMessageDialog(loginView, "로그인에 실패했습니다.");
                         }
 
@@ -73,9 +74,9 @@ public class ClientReceiver extends Thread {
         }
     }
 
-    private synchronized void createMainView(Client client){
+    private synchronized void createMainView(Client client, String id){
         if(mainView == null){
-            mainView = new MainView(client);
+            mainView = new MainView(client, id);
         }else{
             // 화면 내렸을때 다시 보여주는기능 찾아서 넣어도 됨
         }
