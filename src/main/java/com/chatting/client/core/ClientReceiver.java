@@ -56,9 +56,19 @@ public class ClientReceiver extends Thread {
 
                         break;
                     case "120":
-                        logger.info(arr[2]);
-
-                        logger.info("유저리스트 프로토콜");
+                        logger.info(arr[1]);
+                        
+                        logger.info("온라인리스트 프로토콜");
+                        break;
+                    case "121":
+                        logger.info(arr[1]);
+                        logger.info("오프라인리스트 프로토콜");
+                        String test = arr[1];
+                        
+                        List<String> offlineList = new ArrayList<String>();
+                        
+                        offlineList.add(test);
+                        
                         break;
 
                     default:
