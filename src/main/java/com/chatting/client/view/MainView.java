@@ -59,8 +59,25 @@ public class MainView extends JFrame {
     }
 
 
-    public void changeUserList(List<String> onlineUserNameList, List<String> offlineUserNameList) {
-        DefaultTableModel dtm_online = panel_userList.getDtm_online();
+	/*
+	 * public void changeUserList(List<String> onlineUserNameList, List<String>
+	 * offlineUserNameList) { DefaultTableModel dtm_online =
+	 * panel_userList.getDtm_online(); Vector onlineData =
+	 * dtm_online.getDataVector(); onlineData.clear(); //테이블 온라인 유저 데이터 초기화
+	 * 
+	 * for(String s : onlineUserNameList){ //테이블에 온라인 유저 데이터 입력 Object[] data = {s};
+	 * dtm_online.addRow(data); }
+	 * 
+	 * DefaultTableModel dtm_offline = panel_userList.getDtm_offline(); Vector
+	 * offlineData = dtm_offline.getDataVector(); offlineData.clear();//테이블 오프라인 유저
+	 * 데이터 초기화
+	 * 
+	 * for(String s : offlineUserNameList){//테이블에 오프라인 유저 데이터 입력 Object[] data =
+	 * {s}; dtm_offline.addRow(data); } }
+	 */
+    
+    public void changeOnlineUserList(List<String> onlineUserNameList) {
+    	DefaultTableModel dtm_online = panel_userList.getDtm_online();
         Vector onlineData = dtm_online.getDataVector();
         onlineData.clear(); //테이블 온라인 유저 데이터 초기화
 
@@ -68,8 +85,10 @@ public class MainView extends JFrame {
             Object[] data = {s};
             dtm_online.addRow(data);
         }
-
-        DefaultTableModel dtm_offline = panel_userList.getDtm_offline();
+    }
+    
+    public void changeOfflineUserList(List<String> offlineUserNameList) {
+    	DefaultTableModel dtm_offline = panel_userList.getDtm_offline();
         Vector offlineData = dtm_offline.getDataVector();
         offlineData.clear();//테이블 오프라인 유저 데이터 초기화
 

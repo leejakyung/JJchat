@@ -56,9 +56,41 @@ public class ClientReceiver extends Thread {
 
                         break;
                     case "120":
-                        logger.info(arr[2]);
-
-                        logger.info("유저리스트 프로토콜");
+                        logger.info(arr[1]);
+                        
+                        String onlineIdList =  arr[1].substring(0, arr[1].length());
+                        
+                        String[] online_id =  onlineIdList.split(",");
+                        
+                        List<String> loginId = new ArrayList<String>();
+                        
+                        for (String onID : online_id) {
+							String user = onID;
+							loginId.add(user);
+						}
+                        
+                        mainView.changeOnlineUserList(loginId);
+                        
+                        logger.info("온라인 유저 : {}", online_id);
+                        break;
+                    case "121":
+                        logger.info(arr[1]);
+                        
+                        String offlineIdList =  arr[1].substring(0, arr[1].length());
+                        
+                        String[] offline_id =  offlineIdList.split(",");
+                        
+                        List<String> logoutId = new ArrayList<String>();
+                        
+                        for (String onID : offline_id) {
+							String user = onID;
+							logoutId.add(user);
+						}
+                        mainView.changeOfflineUserList(logoutId);
+                        
+                        logger.info("오프라인 유저 : {}", offline_id);
+                     
+                        
                         break;
 
                     default:
