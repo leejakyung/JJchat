@@ -43,7 +43,7 @@ public class MainView extends JFrame {
         JTabbedPane tabbedPane = new JTabbedPane();
 
 //        this.addWindowListener(defHandler);
-        panel_userList = new UserListPanel(userName);
+        panel_userList = new UserListPanel(client, userName);
         panel_userList.add(new JLabel("유저목록", SwingConstants.CENTER));
         tabbedPane.addTab("유저목록", panel_userList);
 

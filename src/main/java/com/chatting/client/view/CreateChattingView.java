@@ -20,6 +20,18 @@ public class CreateChattingView extends JFrame {
     public CreateChattingView() {
         initializeDisplay();
     }
+    
+    public CreateChattingView(Client client) {
+        this.client = client;
+        initializeDisplay();
+    }
+    
+    public CreateChattingView(String myId, String targetId) {
+        this.myId = myId;
+        this.targetId = targetId;
+        initializeDisplay();
+    }
+
 
     public CreateChattingView(Client client, String myId, String targetId) {
         this.client = client;
@@ -64,9 +76,10 @@ public class CreateChattingView extends JFrame {
         ///////하단
         JPanel jp_south = new JPanel();
         JButton jbtn_create = new JButton("만들기");
+        logger.info("client: " + client);
 		jbtn_create.addActionListener(e -> {
 //            Protocol.createRoom + ~~~
-            client.sendMessage(Protocol.createRoom, "test", "test");
+            client.sendMessage(Protocol.createRoom, myId, jlb_targetId.getText());
             jtf_roomName.getText();
         });
         jp_south.add(jbtn_create);

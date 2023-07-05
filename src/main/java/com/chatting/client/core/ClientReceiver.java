@@ -18,6 +18,7 @@ public class ClientReceiver extends Thread {
     private final Client client;
     private LoginView loginView;
     private MainView mainView;
+    private ChatRoomView chatRoomView;
 
     private final List<ChatRoomView> chatRoomViewList = new ArrayList<>();
 
@@ -92,6 +93,20 @@ public class ClientReceiver extends Thread {
                      
                         
                         break;
+                        
+                    case "200":
+                    	
+                    	String targetId = arr[1];
+                    	
+                    	if("new".equals(arr[2])) {
+                    		// 새로운 채팅방 생성
+                    		ChatRoomView chatRoomView = new ChatRoomView();
+                    	} else if ("exsit".equals(arr[2])) {
+                    		// 기존의 채팅방 띄움 
+                    		ChatRoomView chatRoomView = new ChatRoomView();
+                    	}
+                        
+                       
 
                     default:
                         logger.info("Other case");

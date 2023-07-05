@@ -3,6 +3,8 @@ package com.chatting.client.view;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.chatting.client.core.Client;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -19,8 +21,16 @@ public class UserListPanel extends JPanel {
     private DefaultTableModel dtm_offline;
 
     private String userName;
+    private final Client client;
 
-    public UserListPanel(String userName) {
+    public UserListPanel(Client client) {
+        this.client = client;
+        initializeDisplay();
+        initialize();
+    }
+
+    public UserListPanel(Client client, String userName) {
+        this.client = client;
         this.userName = userName;
         initializeDisplay();
         initialize();
@@ -89,7 +99,7 @@ public class UserListPanel extends JPanel {
             String cellData = getCellData(row, col);
             logger.info("선택된 온라인 유저 셀 : {}", cellData);
 
-            CreateChattingView view = new CreateChattingView();
+            CreateChattingView view = new CreateChattingView(client, userName, cellData);
 
         });
         panel_south.add(button_chat);
