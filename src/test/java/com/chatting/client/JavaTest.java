@@ -28,8 +28,8 @@ public class JavaTest {
         System.out.println(test1.getA());
         System.out.println(test1.getB());
 
-        System.out.println(test1.getA());
-        System.out.println(test1.getB());
+        System.out.println(test2.getA());
+        System.out.println(test2.getB());
 
         System.out.println(test1.lengthByA());
         System.out.println(test2.lengthByA());
