@@ -60,7 +60,7 @@ public class ClientReceiver extends Thread {
                         
                         String onlineIdList =  arr[1].substring(0, arr[1].length());
                         
-                        String[] online_id =  onlineIdList.split(",");
+                        String[] online_id =  onlineIdList.replace("[","").replace("]","").split(",");
                         
                         List<String> loginId = new ArrayList<String>();
                         
@@ -78,7 +78,7 @@ public class ClientReceiver extends Thread {
                         
                         String offlineIdList =  arr[1].substring(0, arr[1].length());
                         
-                        String[] offline_id =  offlineIdList.split(",");
+                        String[] offline_id =  offlineIdList.replace("[","").replace("]","").split(",");
                         
                         List<String> logoutId = new ArrayList<String>();
                         
