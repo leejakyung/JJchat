@@ -23,11 +23,19 @@ public class ChatRoomView extends JFrame {
 
     private final JPanel jp_file = new JPanel();
     private final StyledDocument sd_display = new DefaultStyledDocument(new StyleContext());
+    
+    private String myId;
+    private String targetId;
 
-
-    public ChatRoomView() {
+	public ChatRoomView() {
         initializeDisplay();
-    }
+    }	
+
+	public ChatRoomView(String myId, String targetId) {
+		this.myId = myId;
+		this.targetId = targetId;
+		initializeDisplay();
+	}
 
     private void initializeDisplay() {
         Font font = new Font("고딕체", Font.BOLD, 15);
@@ -73,7 +81,7 @@ public class ChatRoomView extends JFrame {
         jbtn_send.addActionListener(e ->{
             logger.info(jtf_msg.getText());
             try {
-                sd_display.insertString(sd_display.getLength(), "<testId>"+ jtf_msg.getText() +"\n", null);
+                sd_display.insertString(sd_display.getLength(), "<"+ myId+">" + jtf_msg.getText() +"\n", null);
                 jtf_msg.setText("");
             } catch (BadLocationException ex) {
                 throw new RuntimeException(ex);

@@ -2,6 +2,7 @@ package com.chatting.client.core;
 
 import com.chatting.client.model.Protocol;
 import com.chatting.client.view.ChatRoomView;
+import com.chatting.client.view.CreateChattingView;
 import com.chatting.client.view.LoginView;
 import com.chatting.client.view.MainView;
 import org.apache.logging.log4j.LogManager;
@@ -96,16 +97,19 @@ public class ClientReceiver extends Thread {
                         
                     case "200":
                     	
-                    	String targetId = arr[1];
+                    	String myId = arr[1];
+                    	String targetId = arr[2];
                     	
-                    	if("new".equals(arr[2])) {
-                    		// 새로운 채팅방 생성
-                    		ChatRoomView chatRoomView = new ChatRoomView();
-                    	} else if ("exist".equals(arr[2])) {
-                    		// 기존의 채팅방 띄움 
-                    		ChatRoomView chatRoomView = new ChatRoomView();
+                    	if("new".equals(arr[3])) { // 새로운 채팅방 생성	
+                    		chatRoomView = new ChatRoomView(myId, targetId);
+                    		
+                    	} else if ("exist".equals(arr[3])) { // 기존의 채팅방 띄움      		                    		
+                    		chatRoomView = new ChatRoomView(myId, targetId); 
+                    		
                     	}
-                        
+                    	
+                    	
+                    	
                        
 
                     default:

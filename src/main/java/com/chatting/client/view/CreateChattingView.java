@@ -81,8 +81,11 @@ public class CreateChattingView extends JFrame {
 //            Protocol.createRoom + ~~~
             client.sendMessage(Protocol.createRoom, myId, jlb_targetId.getText());
             jtf_roomName.getText();
+            this.dispose();
         });
         jp_south.add(jbtn_create);
+        
+        
 
         this.add("North", jp_north);
         this.add("Center", jp_center);
