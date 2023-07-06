@@ -101,7 +101,7 @@ public class ClientReceiver extends Thread {
                     	if("new".equals(arr[2])) {
                     		// 새로운 채팅방 생성
                     		ChatRoomView chatRoomView = new ChatRoomView();
-                    	} else if ("exsit".equals(arr[2])) {
+                    	} else if ("exist".equals(arr[2])) {
                     		// 기존의 채팅방 띄움 
                     		ChatRoomView chatRoomView = new ChatRoomView();
                     	}
