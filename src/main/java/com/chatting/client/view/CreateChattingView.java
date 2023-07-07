@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CreateChattingView extends JFrame {
 
@@ -77,12 +79,38 @@ public class CreateChattingView extends JFrame {
         JPanel jp_south = new JPanel();
         JButton jbtn_create = new JButton("만들기");
         logger.info("client: " + client);
-		jbtn_create.addActionListener(e -> {
-//            Protocol.createRoom + ~~~
-            client.sendMessage(Protocol.createRoom, myId, jlb_targetId.getText());
-            jtf_roomName.getText();
-            this.dispose();
-        });
+        
+//        jbtn_create.addActionListener(new MyActionListener(client, myId, targetId));
+// 		  아래 내용을 줄인게 위의 코드!      
+        logger.info("1");
+        ActionListener actionListener = new MyActionListener(client, myId, jlb_targetId.getText(), jtf_roomName.getText());
+        logger.info("jlb_targetId.getText() : " + jlb_targetId.getText());
+        logger.info("3");
+        jbtn_create.addActionListener(actionListener);
+        logger.info("4");
+        
+        
+//        ActionListener actionListener = new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				client.sendMessage(Protocol.createRoom, myId, jlb_targetId.getText());
+//				jtf_roomName.getText();	
+//				dispose();
+//			}	
+//			
+//		};
+//		jbtn_create.addActionListener(actionListener);
+        
+        
+        
+//		jbtn_create.addActionListener(e -> {
+////           Protocol.createRoom + ~~~
+//            client.sendMessage(Protocol.createRoom, myId, jlb_targetId.getText());
+//            jtf_roomName.getText();
+//            this.dispose();
+//        });
+		
         jp_south.add(jbtn_create);
         
         
