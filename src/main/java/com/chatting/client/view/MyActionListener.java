@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 import com.chatting.client.core.Client;
 import com.chatting.client.model.Protocol;
 
+import javax.swing.*;
+
 
 public class MyActionListener implements ActionListener {
 	
@@ -17,17 +19,16 @@ public class MyActionListener implements ActionListener {
 	private Client client;
 	private String myId;
 	private String targetId;
-	private String roomName;
+	private JTextField roomName;
 	private CreateChattingView createChattingView;
 	
 	public MyActionListener() {
 
     }
 	
-	public MyActionListener(String myId, String targetId, String roomName) {
+	public MyActionListener(String myId, String targetIde) {
         this.myId = myId;
         this.targetId = targetId;
-        this.roomName = roomName;
     }
 	
 	public MyActionListener(Client client, String myId, String targetId) {
@@ -36,7 +37,7 @@ public class MyActionListener implements ActionListener {
         this.targetId = targetId;
     }
 	
-	public MyActionListener(Client client, String myId, String targetId, String roomName) {
+	public MyActionListener(Client client, String myId, String targetId, JTextField roomName) {
         this.client = client;
         this.myId = myId;
         this.targetId = targetId;
@@ -48,7 +49,7 @@ public class MyActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		logger.info("2");
-		client.sendMessage(Protocol.createRoom, myId, targetId, roomName);
+		client.sendMessage(Protocol.createRoom, myId, targetId, roomName.getText());
 		
 	}
 

@@ -83,7 +83,7 @@ public class CreateChattingView extends JFrame {
 //        jbtn_create.addActionListener(new MyActionListener(client, myId, targetId));
 // 		  아래 내용을 줄인게 위의 코드!      
         logger.info("1");
-        ActionListener actionListener = new MyActionListener(client, myId, jlb_targetId.getText(), jtf_roomName.getText());
+        ActionListener actionListener = new MyActionListener(client, myId, targetId, jtf_roomName);
         logger.info("jlb_targetId.getText() : " + jlb_targetId.getText());
         logger.info("3");
         jbtn_create.addActionListener(actionListener);
