@@ -19,7 +19,6 @@ public class MyActionListener implements ActionListener {
 	private Client client;
 	private String myId;
 	private String targetId;
-	private JTextField roomName;
 	private CreateChattingView createChattingView;
 	
 	public MyActionListener() {
@@ -33,20 +32,19 @@ public class MyActionListener implements ActionListener {
     }
 
 	
-	public MyActionListener(Client client, String myId, String targetId, JTextField roomName, CreateChattingView createChattingView) {
+	public MyActionListener(Client client, String myId, String targetId, CreateChattingView createChattingView) {
         this.client = client;
         this.myId = myId;
         this.targetId = targetId;
-        this.roomName = roomName;
         this.createChattingView = createChattingView;
     }
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
 		logger.info("2");
-		client.sendMessage(Protocol.createRoom, myId, targetId, roomName.getText());
+		client.sendMessage(Protocol.createRoom, myId, targetId, createChattingView.getRoomName().getText());
 		if(createChattingView != null) {
 			createChattingView.dispose();
 		}

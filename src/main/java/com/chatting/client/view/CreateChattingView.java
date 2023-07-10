@@ -17,6 +17,11 @@ public class CreateChattingView extends JFrame {
     private Client client;
     private String myId;
     private String targetId;
+    private JTextField roomName;
+    
+	public JTextField getRoomName() {
+		return roomName;
+	}
 
 	public CreateChattingView() {
         initializeDisplay();
@@ -74,6 +79,8 @@ public class CreateChattingView extends JFrame {
         jp_center.setBackground(Color.WHITE);
         jp_center.setLayout(null);
 
+        roomName = jtf_roomName;
+        
         ///////하단
         JPanel jp_south = new JPanel();
         JButton jbtn_create = new JButton("만들기");
@@ -82,7 +89,7 @@ public class CreateChattingView extends JFrame {
 //        jbtn_create.addActionListener(new MyActionListener(client, myId, targetId));
 // 		  아래 내용을 줄인게 위의 코드!      
         logger.info("1");       
-        ActionListener actionListener = new MyActionListener(client, myId, targetId, jtf_roomName, this);
+        ActionListener actionListener = new MyActionListener(client, myId, targetId, this);
         logger.info("jlb_targetId.getText() : " + jlb_targetId.getText());
         logger.info("3");
         jbtn_create.addActionListener(actionListener);
