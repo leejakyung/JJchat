@@ -14,7 +14,7 @@ import javax.swing.*;
 
 public class MyActionListener implements ActionListener {
 	
-	private static final Logger logger = LogManager.getLogger(CreateChattingView.class);
+	private static final Logger logger = LogManager.getLogger(MyActionListener.class);
 
 	private Client client;
 	private String myId;
@@ -25,31 +25,32 @@ public class MyActionListener implements ActionListener {
 	public MyActionListener() {
 
     }
-	
-	public MyActionListener(String myId, String targetIde) {
-        this.myId = myId;
-        this.targetId = targetId;
-    }
-	
+
 	public MyActionListener(Client client, String myId, String targetId) {
         this.client = client;
         this.myId = myId;
         this.targetId = targetId;
     }
+
 	
-	public MyActionListener(Client client, String myId, String targetId, JTextField roomName) {
+	public MyActionListener(Client client, String myId, String targetId, JTextField roomName, CreateChattingView createChattingView) {
         this.client = client;
         this.myId = myId;
         this.targetId = targetId;
         this.roomName = roomName;
+        this.createChattingView = createChattingView;
     }
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		logger.info("2");
 		client.sendMessage(Protocol.createRoom, myId, targetId, roomName.getText());
+		if(createChattingView != null) {
+			createChattingView.dispose();
+		}
+
 		
 	}
 
