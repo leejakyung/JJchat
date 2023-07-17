@@ -51,9 +51,9 @@ public class Client{
         sb.append(protocol).append(Protocol.seperator);
         for (int i = 0; i < msg.length; i++) {
             if(i < msg.length-1){
-                sb.append(msg[i]).append(Protocol.seperator);
+                sb.append(msg[i].trim()).append(Protocol.seperator);
             }else{
-                sb.append(msg[i]);
+                sb.append(msg[i].trim());
             }
         }
 
@@ -74,6 +74,7 @@ public class Client{
             socket.close();
             receiver = null;
         } catch (IOException e) {
+        	
             throw new RuntimeException(e);
         }
 

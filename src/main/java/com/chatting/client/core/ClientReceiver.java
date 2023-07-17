@@ -84,8 +84,8 @@ public class ClientReceiver extends Thread {
                         
                         List<String> logoutId = new ArrayList<String>();
                         
-                        for (String onID : offline_id) {
-							String user = onID;
+                        for (String offID : offline_id) {
+							String user = offID;
 							logoutId.add(user);
 						}
                         mainView.changeOfflineUserList(logoutId);
@@ -95,22 +95,48 @@ public class ClientReceiver extends Thread {
                         
                         break;
                         
-                    case "200":
+                    case "200": // 채팅방 생성
                     	
                     	String myId = arr[1];
                     	String targetId = arr[2];
                     	
                     	if("new".equals(arr[3])) { // 새로운 채팅방 생성	
-                    		chatRoomView = new ChatRoomView(myId, targetId);
+                    		chatRoomView = new ChatRoomView(client, myId, targetId);
                     		
                     	} else if ("exist".equals(arr[3])) { // 기존의 채팅방 띄움      		                    		
-                    		chatRoomView = new ChatRoomView(myId, targetId); 
+                    		chatRoomView = new ChatRoomView(client, myId, targetId); 
                     		
+                    	} 
+                    	
+                    	break;
+                    
+                    case "202": // 채팅방 목록 
+                    	
+                    	String roomName = arr[1].substring(0, arr[1].length());
+                    	
+                    	String[] roomList = roomName.replace("[","").replace("]","").split(",");
+                    	
+                    	List<String> roomNameList = new ArrayList<String>();
+                    	
+                    	for(String item : roomList) {
+                    		String room = item;
+                    		roomNameList.add(room);
                     	}
                     	
+                    	mainView.changeChatRoomList(roomNameList);
+
+                    	break;
+                    	
+                    case "300": // 메세지내용 전송
+
+                    	myId = arr[1];
+                    	targetId = arr[2];
+                    	String message = arr[3];
+                    	
+                    	ChatRoomView chatRoomView = new ChatRoomView(client, myId, targetId, message);
                     	
                     	
-                       
+                    	break;	
 
                     default:
                         logger.info("Other case");

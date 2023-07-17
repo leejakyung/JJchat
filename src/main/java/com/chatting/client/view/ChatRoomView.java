@@ -1,5 +1,6 @@
 package com.chatting.client.view;
 
+import com.chatting.client.core.Client;
 import com.chatting.client.model.Protocol;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,8 +25,14 @@ public class ChatRoomView extends JFrame {
     private final JPanel jp_file = new JPanel();
     private final StyledDocument sd_display = new DefaultStyledDocument(new StyleContext());
     
-    private String myId;
+    public StyledDocument getSd_display() {
+		return sd_display;
+	}
+
+	private String myId;
     private String targetId;
+    private Client client;
+    private String msg;
 
 	public ChatRoomView() {
         initializeDisplay();
@@ -34,6 +41,21 @@ public class ChatRoomView extends JFrame {
 	public ChatRoomView(String myId, String targetId) {
 		this.myId = myId;
 		this.targetId = targetId;
+		initializeDisplay();
+	}
+
+	public ChatRoomView(Client client, String myId, String targetId) {
+		this.client = client;
+		this.myId = myId;
+		this.targetId = targetId;
+		initializeDisplay();
+	}
+	
+	public ChatRoomView(Client client, String myId, String targetId, String msg) {
+		this.client = client;
+		this.myId = myId;
+		this.targetId = targetId;
+		this.msg = msg;
 		initializeDisplay();
 	}
 
@@ -74,15 +96,27 @@ public class ChatRoomView extends JFrame {
             @Override
             public void keyReleased(KeyEvent e) {}
         });
+        
+        
+        if (msg != null) {
+        	try {
+				sd_display.insertString(sd_display.getLength(), "<"+ targetId+">" + msg +"\n", null);
+			} catch (BadLocationException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 
 
         //메세지 보내기
         JButton jbtn_send = new JButton("전송");
         jbtn_send.addActionListener(e ->{
-            logger.info(jtf_msg.getText());
+            logger.info("메세지 내용 : " + jtf_msg.getText());
             try {
-                sd_display.insertString(sd_display.getLength(), "<"+ myId+">" + jtf_msg.getText() +"\n", null);
+            	msg = jtf_msg.getText();
+                sd_display.insertString(sd_display.getLength(), "<"+ myId+">" + msg +"\n", null);
                 jtf_msg.setText("");
+                client.sendMessage(Protocol.sendMessage, myId, targetId, msg);
             } catch (BadLocationException ex) {
                 throw new RuntimeException(ex);
             }
