@@ -25,14 +25,19 @@ public class ChatRoomView extends JFrame {
     private final JPanel jp_file = new JPanel();
     private final StyledDocument sd_display = new DefaultStyledDocument(new StyleContext());
     
-    public StyledDocument getSd_display() {
-		return sd_display;
-	}
 
 	private String myId;
     private String targetId;
     private Client client;
     private String msg;
+
+    public StyledDocument getSd_display() {
+    	return sd_display;
+    }
+    
+	public String getRoomName() {
+		return roomName;
+	}
 
 	public ChatRoomView() {
         initializeDisplay();
@@ -51,10 +56,19 @@ public class ChatRoomView extends JFrame {
 		initializeDisplay();
 	}
 	
-	public ChatRoomView(Client client, String myId, String targetId, String msg) {
+	public ChatRoomView(Client client, String myId, String targetId, String roomName) {
 		this.client = client;
 		this.myId = myId;
 		this.targetId = targetId;
+		this.roomName = roomName;
+		initializeDisplay();
+	}
+	
+	public ChatRoomView(Client client, String myId, String targetId, String roomName, String msg) {
+		this.client = client;
+		this.myId = myId;
+		this.targetId = targetId;
+		this.roomName = roomName;
 		this.msg = msg;
 		initializeDisplay();
 	}
@@ -98,14 +112,14 @@ public class ChatRoomView extends JFrame {
         });
         
         
-        if (msg != null) {
-        	try {
-				sd_display.insertString(sd_display.getLength(), "<"+ targetId+">" + msg +"\n", null);
-			} catch (BadLocationException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
+//        if (msg != null) {
+//        	try {
+//				sd_display.insertString(sd_display.getLength(), "<"+ targetId+">" + msg +"\n", null);
+//			} catch (BadLocationException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//		}
 
 
         //메세지 보내기
@@ -116,7 +130,7 @@ public class ChatRoomView extends JFrame {
             	msg = jtf_msg.getText();
                 sd_display.insertString(sd_display.getLength(), "<"+ myId+">" + msg +"\n", null);
                 jtf_msg.setText("");
-                client.sendMessage(Protocol.sendMessage, myId, targetId, msg);
+                client.sendMessage(Protocol.sendMessage, myId, targetId, roomName, msg);
             } catch (BadLocationException ex) {
                 throw new RuntimeException(ex);
             }
