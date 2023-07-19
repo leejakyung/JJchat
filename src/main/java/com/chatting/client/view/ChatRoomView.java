@@ -39,6 +39,14 @@ public class ChatRoomView extends JFrame {
 		return roomName;
 	}
 
+	public String getMyId() {
+		return myId;
+	}
+
+	public String getTargetId() {
+		return targetId;
+	}
+
 	public ChatRoomView() {
         initializeDisplay();
     }	
@@ -190,6 +198,7 @@ public class ChatRoomView extends JFrame {
                 , JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 
+        this.setTitle(roomName);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.add("Center", jp_first);
         this.add("East", jp_second);

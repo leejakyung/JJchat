@@ -1,6 +1,7 @@
 package com.chatting.client.core;
 
 import com.chatting.client.model.Protocol;
+import com.chatting.client.view.ChatListPanel;
 import com.chatting.client.view.ChatRoomView;
 import com.chatting.client.view.CreateChattingView;
 import com.chatting.client.view.LoginView;
@@ -48,7 +49,7 @@ public class ClientReceiver extends Thread {
 
                         String id =  arr[1];
                         if("Y".equals(arr[2])){
-                            createMainView(client, id);
+                            createMainView(client, id, chatRoomViewList);
                             if(loginView != null) {
                                 loginView.dispose();
                             }
@@ -105,30 +106,50 @@ public class ClientReceiver extends Thread {
                     	if(!targetIdList.contains(targetId)) { // 새로운 채팅방 생성	
                     		if(!roomNameList.contains(room)) {
                     			targetIdList.add(targetId);
-                    			roomNameList.add(room);
-                    			ChatRoomView chatRoomView = new ChatRoomView(client, myId, targetId, room);  	
-                    			chatRoomViewList.add(chatRoomView);
+                    			roomNameList.add(room);                    		
+                    			
+                    			ChatRoomView chatRoomView = new ChatRoomView(client, myId, targetId, room);  
+                    			chatRoomViewList.add(chatRoomView);		
+	
                     		}
 	
                     	} else { // 기존 채팅방 생성
                     		
-                    	} 
+                    	}      	
                     	
                     	break;
+                    	
+                    case "201": // 채팅 목록에서 채팅방 생성
+
+                    	myId = arr[1];
+                    	targetId = arr[2];
+                    	room = arr[3];
+
+                    	for (ChatRoomView chatRoom : chatRoomViewList) {
+							if(chatRoom.getMyId().equals(myId)) {
+								if(roomNameList.contains(room)) {
+									ChatRoomView chattingRoomListView = new ChatRoomView(client, myId, targetId, room);
+								}
+							}
+						}
+
+                    	break;	
                     
                     case "202": // 채팅방 목록 
                     	
-                    	String roomName = arr[1].substring(0, arr[1].length());
+                    	myId = arr[1];
+                    	targetId = arr[2];
+                    	room = arr[3];       
                     	
-                    	String[] roomList = roomName.replace("[","").replace("]","").split(",");
+                    	for (ChatRoomView chatRoom : chatRoomViewList) {
+							if(chatRoom.getMyId().equals(myId)) {
+								if(!roomNameList.contains(room)) {
+		                    		roomNameList.add(room);     		
+		                    	} 
+								mainView.changeChatRoomList(roomNameList);
+							}						
+						}                    	                    	
                     	
-                    	
-                    	for(String item : roomList) {
-                    		String rRoom = item;
-                    		roomNameList.add(rRoom);
-                    	}
-                    	
-                    	mainView.changeChatRoomList(roomNameList);
 
                     	break;
                     	
@@ -166,9 +187,9 @@ public class ClientReceiver extends Thread {
         }
     }
 
-    private synchronized void createMainView(Client client, String id){
+    private synchronized void createMainView(Client client, String id, List<ChatRoomView> chatRoomViewList){
         if(mainView == null){
-            mainView = new MainView(client, id);
+            mainView = new MainView(client, id, chatRoomViewList);
         }else{
             // 화면 내렸을때 다시 보여주는기능 찾아서 넣어도 됨
         }
