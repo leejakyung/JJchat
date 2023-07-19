@@ -19,7 +19,6 @@ public class ClientReceiver extends Thread {
     private final Client client;
     private LoginView loginView;
     private MainView mainView;
-    private ChatRoomView chatRoomView;
     private List<String> targetIdList = new ArrayList<String>();
     private List<String> roomNameList = new ArrayList<String>(); 
 
@@ -103,13 +102,11 @@ public class ClientReceiver extends Thread {
                     	String targetId = arr[2];
                     	String room = arr[3];
                     	
-                    	
-                    	
                     	if(!targetIdList.contains(targetId)) { // 새로운 채팅방 생성	
                     		if(!roomNameList.contains(room)) {
                     			targetIdList.add(targetId);
                     			roomNameList.add(room);
-                    			chatRoomView = new ChatRoomView(client, myId, targetId, room);  	
+                    			ChatRoomView chatRoomView = new ChatRoomView(client, myId, targetId, room);  	
                     			chatRoomViewList.add(chatRoomView);
                     		}
 	
@@ -145,7 +142,7 @@ public class ClientReceiver extends Thread {
                     	
                     	for (ChatRoomView chatRoom : chatRoomViewList) {			
                     		if (chatRoom.getRoomName().equals(room)) {							
-                    			chatRoom.getSd_display().insertString(chatRoomView.getSd_display().getLength(), "<"+ targetId+">" + message +"\n", null);                    		
+                    			chatRoom.getSd_display().insertString(chatRoom.getSd_display().getLength(), "<"+ targetId+">" + message +"\n", null);                    		
                     		}
 						}
           	
