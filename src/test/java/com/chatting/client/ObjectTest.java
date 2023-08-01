@@ -32,6 +32,6 @@ public class ObjectTest {
 
     @Test
     void obejctTest(){
-
+    	System.out.println(userList);
     }
 }

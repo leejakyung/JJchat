@@ -18,6 +18,7 @@ public class MainView extends JFrame {
     private final Client client;
     private UserListPanel panel_userList;
     private ChatListPanel panel_chatList;
+    private List<ChatRoomView> chatRoomViewList;
 
     private String userName;
 
@@ -30,6 +31,14 @@ public class MainView extends JFrame {
     public MainView(Client client, String userName) {
         this.client = client;
         this.userName = userName;
+        initializeDisplay();
+        initialize();
+    }
+    
+    public MainView(Client client, String userName, List<ChatRoomView> chatRoomViewList) {
+        this.client = client;
+        this.userName = userName;
+        this.chatRoomViewList = chatRoomViewList;
         initializeDisplay();
         initialize();
     }
@@ -47,7 +56,7 @@ public class MainView extends JFrame {
         panel_userList.add(new JLabel("유저목록", SwingConstants.CENTER));
         tabbedPane.addTab("유저목록", panel_userList);
 
-        panel_chatList = new ChatListPanel(userName);
+        panel_chatList = new ChatListPanel(client, userName, chatRoomViewList);
         panel_chatList.add(new JLabel("방목록", SwingConstants.CENTER));
         tabbedPane.addTab("방목록", panel_chatList);
 

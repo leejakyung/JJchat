@@ -47,6 +47,10 @@ public class ChatRoomView extends JFrame {
 		return targetId;
 	}
 
+	public String getMsg() {
+		return msg;
+	}
+
 	public ChatRoomView() {
         initializeDisplay();
     }	
@@ -135,6 +139,7 @@ public class ChatRoomView extends JFrame {
         jbtn_send.addActionListener(e ->{
             logger.info("메세지 내용 : " + jtf_msg.getText());
             try {
+            	logger.info("보낸메세지 주소 : {}" , System.identityHashCode(this));
             	msg = jtf_msg.getText();
                 sd_display.insertString(sd_display.getLength(), "<"+ myId+">" + msg +"\n", null);
                 jtf_msg.setText("");
@@ -232,5 +237,6 @@ public class ChatRoomView extends JFrame {
         jp_file.add(jlb_file);
         jp_file.revalidate();
     }
+
 
 }

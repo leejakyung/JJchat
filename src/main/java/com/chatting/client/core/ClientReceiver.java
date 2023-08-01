@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ClientReceiver extends Thread {
@@ -49,7 +50,7 @@ public class ClientReceiver extends Thread {
 
                         String id =  arr[1];
                         if("Y".equals(arr[2])){
-                            createMainView(client, id, chatRoomViewList);
+                            createMainView(client, id);
                             if(loginView != null) {
                                 loginView.dispose();
                             }
@@ -123,13 +124,14 @@ public class ClientReceiver extends Thread {
 
                     	myId = arr[1];
                     	targetId = arr[2];
-                    	room = arr[3];
-
+                    	room = arr[3];      	
+      
                     	for (ChatRoomView chatRoom : chatRoomViewList) {
-							if(chatRoom.getMyId().equals(myId)) {
-								if(roomNameList.contains(room)) {
-									ChatRoomView chattingRoomListView = new ChatRoomView(client, myId, targetId, room);
-								}
+							if(chatRoom.getMyId().equals(myId) && chatRoom.getRoomName().equals(room)) {
+								chatRoomViewList.remove(chatRoom);
+								chatRoom = new ChatRoomView(client, myId, targetId, room);		
+								chatRoomViewList.add(chatRoom);
+								break;
 							}
 						}
 
@@ -162,8 +164,12 @@ public class ClientReceiver extends Thread {
                     	
                     	
                     	for (ChatRoomView chatRoom : chatRoomViewList) {			
-                    		if (chatRoom.getRoomName().equals(room)) {							
-                    			chatRoom.getSd_display().insertString(chatRoom.getSd_display().getLength(), "<"+ targetId+">" + message +"\n", null);                    		
+                    		if (chatRoom.getRoomName().equals(room)) {		
+                    			logger.info("여기찍히나 ...?");
+                    			logger.info("타겟아이디 :"  + targetId);
+                    			logger.info("메세지 내용 찍히는 거 확인 : " + message);
+                    			logger.info("받은 메세지 주소: {} " , System.identityHashCode(chatRoom));
+                    			chatRoom.getSd_display().insertString(chatRoom.getSd_display().getLength(), "<"+ targetId +">" + message +"\n", null);
                     		}
 						}
           	
@@ -187,7 +193,7 @@ public class ClientReceiver extends Thread {
         }
     }
 
-    private synchronized void createMainView(Client client, String id, List<ChatRoomView> chatRoomViewList){
+    private synchronized void createMainView(Client client, String id){
         if(mainView == null){
             mainView = new MainView(client, id, chatRoomViewList);
         }else{
