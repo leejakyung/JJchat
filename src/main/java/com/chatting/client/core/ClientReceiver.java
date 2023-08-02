@@ -23,6 +23,7 @@ public class ClientReceiver extends Thread {
     private MainView mainView;
     private List<String> targetIdList = new ArrayList<String>();
     private List<String> roomNameList = new ArrayList<String>(); 
+    
 
     private final List<ChatRoomView> chatRoomViewList = new ArrayList<>();
 
@@ -124,8 +125,11 @@ public class ClientReceiver extends Thread {
 
                     	myId = arr[1];
                     	targetId = arr[2];
-                    	room = arr[3];      	
-      
+                    	room = arr[3];    
+                    	
+                    	
+                    	// foreach 방법
+                    	/*
                     	for (ChatRoomView chatRoom : chatRoomViewList) {
 							if(chatRoom.getMyId().equals(myId) && chatRoom.getRoomName().equals(room)) {
 								chatRoomViewList.remove(chatRoom);
@@ -134,7 +138,46 @@ public class ClientReceiver extends Thread {
 								break;
 							}
 						}
+						*/
+                    	
+                    	// iterator 방법
+                    	
+                    	Iterator<ChatRoomView> iterator = chatRoomViewList.iterator();
+                    	
+                    	while(iterator.hasNext()) {
+                    		ChatRoomView chattingRoom = iterator.next();
+                    		if(chattingRoom.getMyId().equals(myId) && chattingRoom.getRoomName().equals(room)) {
+                    			// 아래 두줄 코드 동일하게 list의 next 값이 삭제 됨 
+                    			// index와 차이가 있다면 원하는 인덱스번호에 값을 삭제하고 넣어주는게 아닌 리스트 값이 인덱스 번호 하나씩 앞으로 이동 
+                    			iterator.remove();
+//                    			chatRoomViewList.remove(chattingRoom);
+                    			chattingRoom = new ChatRoomView(client, myId, targetId, room); 
+                    			chatRoomViewList.add(chattingRoom);
+                    			break;
+                    		}                    		
+              
+                    	}
+                    	
+                    	
+                    	
+                    	// index를 이용한 방법
+                    	/*
+                    	for (int i = 0; i < chatRoomViewList.size(); i++) {
+                    		ChatRoomView chatRoom = chatRoomViewList.get(i);
+                    		if(chatRoom.getMyId().equals(myId) && chatRoom.getRoomName().equals(room)) {
+                    			// 인덱스번호에 add하면 해당 자리에 덮어쓰기 되지만 이미 그 자리를 차지하고 있던 친구가 없어지는 것이 아닌 인덱스 마지막자리로 이동하므로 삭제 해준 뒤  추가해줘야 함
+                    			// 예를 들어 리스트 안에 1,2,3 값이 들어 있는데 0번 인덱스 자리에 4를 add해주면  4,2,3,1 이런식으로 자리가 변경 됨 
+                    			// 그러므로 해당 인덱스번호의 값을 완전히 삭제하고 싶다면 0번 인덱스를 삭제 해준 뒤 추가 해주면 4,2,3 이렇게 리스트에 값이 저장되는 것을 확인할 수 있음!!!
+                    			chatRoomViewList.remove(i);
+                    			chatRoom = new ChatRoomView(client, myId, targetId, room);
+                    			chatRoomViewList.add(i, chatRoom);
+                    			break;
+                    		}
 
+                    	}
+                    	*/
+                    	
+                    	
                     	break;	
                     
                     case "202": // 채팅방 목록 
