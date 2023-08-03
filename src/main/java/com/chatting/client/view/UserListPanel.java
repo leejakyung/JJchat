@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.chatting.client.core.Client;
+import com.chatting.client.model.Protocol;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -106,6 +107,9 @@ public class UserListPanel extends JPanel {
 
         JButton button_logout = new JButton("로그아웃");
 //            jbtn_logout.addActionListener(defHandler);
+        button_logout.addActionListener(e -> {
+        	client.sendMessage(Protocol.logout, userName);
+        });
         panel_south.add(button_logout);
         panel_south.setBounds(0, 500, 500, 40);
 

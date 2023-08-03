@@ -50,6 +50,7 @@ public class ClientReceiver extends Thread {
                         logger.info("로그인 프로토콜");
 
                         String id =  arr[1];
+                        
                         if("Y".equals(arr[2])){
                             createMainView(client, id);
                             if(loginView != null) {
@@ -61,6 +62,20 @@ public class ClientReceiver extends Thread {
 
 
                         break;
+                        
+                    case "130":
+                        logger.info("로그아웃 프로토콜");
+
+                        id =  arr[1];
+                        
+                        if("Y".equals(arr[2])){
+                            if(mainView != null) {
+                            	mainView.dispose();
+                            }
+                        } 
+
+                        break;
+                        
                     case "120":
                         logger.info(arr[1]);
                         
