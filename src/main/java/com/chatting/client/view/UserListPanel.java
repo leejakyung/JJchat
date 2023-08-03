@@ -16,8 +16,7 @@ public class UserListPanel extends JPanel {
 
     private static final Logger logger = LogManager.getLogger(UserListPanel.class);
 
-     // 사용자이름
-
+    // 사용자이름
     private DefaultTableModel dtm_online;
     private DefaultTableModel dtm_offline;
 
@@ -99,8 +98,15 @@ public class UserListPanel extends JPanel {
             int col = jtb_online.getSelectedColumn();
             String cellData = getCellData(row, col);
             logger.info("선택된 온라인 유저 셀 : {}", cellData);
+            
+            String targetId = cellData.trim();
 
-            CreateChattingView view = new CreateChattingView(client, userName, cellData);
+            if (!userName.equals(targetId)) {
+            	CreateChattingView view = new CreateChattingView(client, userName, targetId);
+			} else {
+				JOptionPane.showMessageDialog(this, "나와의 채팅은 불가능 합니다.");
+			}
+            
 
         });
         panel_south.add(button_chat);
