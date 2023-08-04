@@ -10,6 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
+
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -70,10 +72,12 @@ public class ClientReceiver extends Thread {
                         
                         if("Y".equals(arr[2])){
                             if(mainView != null) {
-                            	mainView.dispose();
+                            	mainView.dispose();                              	
                             }
                         } 
 
+                        loginAgain();           
+                        		
                         break;
                         
                     case "120":
@@ -248,7 +252,7 @@ public class ClientReceiver extends Thread {
     private synchronized void createLoginView(Client client){
         if(loginView == null){
             loginView = new LoginView(client);
-        }
+        } 
     }
 
     private synchronized void createMainView(Client client, String id){
@@ -263,6 +267,10 @@ public class ClientReceiver extends Thread {
         loginView = null;
         mainView = null;
         client.shutdown();
+    }
+    
+    private synchronized void loginAgain(){  	
+        Client client = new Client("127.0.0.1", 9100);
     }
 
 }
