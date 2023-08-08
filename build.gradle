@@ -8,6 +8,10 @@ sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
+	
+	flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
@@ -22,3 +26,21 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+task copyDependencies(type: Copy) {
+   into "$buildDir/libs"
+   from configurations.runtimeClasspath
+}
+
+jar {
+   manifest {
+      attributes(
+            'Main-Class': 'com.chatting.client.ChattingClientLauncher',
+            'Class-Path': configurations.compileClasspath.files.collect { "$it.name" }.join(' ')
+      )
+   }
+}
+
+
+
+
